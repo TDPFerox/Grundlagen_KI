@@ -148,14 +148,20 @@ Ein Beispiel hierfür ist das Pathfinding von Mobs in Minecraft, bei welchem die
 ## Aufgabe 4 Beweis der Optimalität von A*
 
 Sei $h$ eine zulässige Heuristik, also $h(n) \leq h^*(n)$ für alle Knoten $n$.
+
 Angenommen, A* expandiert als ersten Zielknoten einen Zustand $G$ mit Kosten $g(G) = C$.
 Weiter nehmen wir an, es existiere eine bessere Lösung $G^*$ mit geringeren Kosten $g(G^*) = C^* < C$.
+
 Betrachte den optimalen Pfad von Start $S$ zu $G^*$ und den ersten Knoten $n$ auf diesem Pfad, der sich kurz vor der Expansion von $G$ noch in der Frontier befindet.
+
 Für diesen Knoten gilt aufgrund des optimalen Pfades $g(n) + h^*(n) = C^*$, wobei $h^*(n)$ die tatsächlichen Kosten von $n$ bis $G^*$ sind.
+
 Da die Heuristik zulässig ist, gilt $f(n) = g(n) + h(n) \leq g(n) + h^*(n) = C^*$.
 Somit gilt $f(n) \leq C^* < C = f(G)$.
+
 A* expandiert jedoch immer den Knoten mit dem kleinsten $f$-Wert zuerst.
 Damit müsste also $n$ vor $G$ expandiert werden, was auch zur Expansion von $G^*$ mit geringeren Kosten führen würde.
+
 Das steht im Widerspruch zur Annahme, dass $G$ zuerst expandiert wird und teurer ist.
 Folglich kann keine bessere Lösung existieren – die erste von A* gefundene Lösung muss optimal sein.
 

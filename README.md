@@ -8,9 +8,18 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 
 ## Aufgabe 1 Problemformalisierung
 
+Bei dieser Aufgabe ergeben sich viele verschiedene Zustände die nicht zulässig sind, da sie die gegebenen Regeln der Aufgabe verletzen würden. Man kann auf unterschiedlich Weise starten, um zum Ziel zu kommen, muss aber beim Durchführen der Aufgabe die Elben mehrheitlich die Seite wechseln.
+> Hierbei führen die Pfade wieder zusammen, da ansonsten die Gleichgewichtsregeln, von Orks und Elben verletzt werden.
+
+Nachfolgenden sieht man den Start- und Endzustand sowie möglich Aktionen und die Regeln.
+
 ![Problemgraph](Problemformalisierung_Elben_Orks.drawio.png)
 
+***
+
 ## Aufgabe 2 Suchverfahren
+
+>Für die Suchverfahren wurde für die **Handdurchführung** angenommen, das die bei der Bearbeitung eines offenen Knoten entdeckten neuen Knoten überprüft werden, ob es sich bei diesen um den gesuchten Zielknoten handelt.
 
 ### Breitensuche
 
@@ -24,6 +33,8 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 
 **Benötigte Schritte:** 5 
 
+***
+
 ### Tiefensuche
 
 | Knoten    | offen Knoten                | besuchte Knoten             |
@@ -36,6 +47,8 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 
 **Benötigte Schritte:** 3
 
+***
+
 ### A*
 
 **1. Schritt** 
@@ -45,7 +58,7 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 | Würzburg-Erfurt    | 586km      |
 | Würzburg-Nürnberg  | 640km      |
 
-Weiter mit Frankfurt und vergleichen
+>Weiter mit **Frankfurt** und vergleichen
 
 **2. Schritt**
 
@@ -56,7 +69,7 @@ Weiter mit Frankfurt und vergleichen
 | Würzburg-Erfurt             | 586km      |
 | Würzburg-Nürnberg           | 640km      |
 
-Weiter mit Mannheim und vergleichen
+>Weiter mit **Mannheim** und vergleichen
 
 **3. Schritt**
 
@@ -67,7 +80,7 @@ Weiter mit Mannheim und vergleichen
 | Würzburg-Erfurt    | 586km      |
 | Würzburg-Nürnberg  | 640km      |
 
-Weiter mit Karlsruhe und vergleichen
+>Weiter mit **Karlsruhe** und vergleichen
 
 **4. Schritt**
 
@@ -78,7 +91,7 @@ Weiter mit Karlsruhe und vergleichen
 | Würzburg-Erfurt   | 586km      |
 | Würzburg-Nürnberg | 640km      |
 
-Weiter mit Erfurt und vergleichen
+>Weiter mit **Erfurt** und vergleichen
 
 **5. Schritt**
 
@@ -88,7 +101,7 @@ Weiter mit Erfurt und vergleichen
 | Würzburg-Frankfurt-Kassel   | 850km      |
 | Würzburg-Nürnberg | 640km      |
 
-Weiter mit Augsburg und vergleichen
+>Weiter mit **Augsburg** und vergleichen
 
 **6. Schritt**
 
@@ -98,7 +111,7 @@ Weiter mit Augsburg und vergleichen
 | Würzburg-Frankfurt-Kassel   | 850km      |
 | Würzburg-Nürnberg | 640km      |
 
-Weiter mit Nürnberg und vergleichen
+>Weiter mit **Nürnberg** und vergleichen
 
 **7. Schritt**
 
@@ -107,8 +120,10 @@ Weiter mit Nürnberg und vergleichen
 | Würzburg-Nürnberg-München | 270km      |
 | Kassel  | 850km      |
 
-Die Heuristic ist definitiv falsch, da es sich bei den angenommenen Werten um nicht konsistente und zulässige Werte handelt.
-Stattdessen sollte Nürnberg < 170km sein.
+>Die Heuristic ist definitiv falsch, da es sich bei den angenommenen Werten um nicht konsistente und zulässige Werte handelt.
+Stattdessen sollte **Nürnberg < 170km** sein.
+
+**Nach Korrektur:**
 
 **1. Schritt**
 
@@ -118,7 +133,7 @@ Stattdessen sollte Nürnberg < 170km sein.
 | Würzburg-Erfurt    | 586km      |
 | Würzburg-Nürnberg  | 263km      |
 
-Weiter mit Nürnberg
+>Weiter mit **Nürnberg**
 
 **2. Schritt**
 
@@ -127,6 +142,10 @@ Weiter mit Nürnberg
 | Würzburg-Frankfurt        | 317km      |
 | Würzburg-Erfurt           | 586km      |
 | Würzburg-Nürnberg-München | 270km      |
+
+>**München** wird nach dem zweiten Schritt entdeckt, wenn die Heuristic korrekt ist.
+
+***
 
 ## Aufgabe 3 Dominanz
 

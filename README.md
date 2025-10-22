@@ -5,3 +5,4 @@ In diesem Repository werden die Aufgaben von Grundlagen der KI aus dem 3.Semeste
 Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeitet.
 
 1. **B01:** Branch [Blatt1](https://github.com/TDPFerox/Grundlagen_KI/tree/Blatt1)
+2. **B02:** Branch [Blatt2](https://github.com/TDPFerox/Grundlagen_KI/tree/Blatt2)

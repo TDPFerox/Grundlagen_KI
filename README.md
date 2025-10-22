@@ -17,7 +17,7 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 Die Darstellung als Array wäre hier möglich:
 
 ```java
-[1, 5, 8, 6, 3, 7, 2, 4]
+[1, 8, 3, 6, 5, 4, 7, 2]
 ```
 
 Der Index des Arrays repräsentiert die Spalten und die Werte zeigen die Zeilen der Position der Königinnen.
@@ -26,7 +26,7 @@ Der Index des Arrays repräsentiert die Spalten und die Werte zeigen die Zeilen 
 
 Als *Crossover* wäre hier das Tauschen von zwei Teilen der Eltern eine Möglichkeit. Also das Auftrennen der Eltern an der gleichen Stelle.
 
-Für eine Mutation könnte man die zwei Werte des Arrays miteinander vertauschen.
+Für eine Mutation könnte man die zwei Werte des Arrays miteinander vertauschen (Swap-Mutation)
 
 **Fitnessfunktion:**
 
@@ -46,7 +46,45 @@ Regionen einer Landkarte sollen mit der minimalen Anzahl an Farben gefärbt werd
 
 **Kodierung:**
 
+Der Einfachheit halber kann man hier wieder den gleichen Ansatz verfolgen wie bei den Königinnen:
 
+```java
+[1, 2, 3, 4, 5, 1]
+```
+
+Diesmal ist jeder ein Index ein bestimmtes Land und der Wert im Array eine bestimmte Farbe.
+
+**Operatoren:**
+
+Auch hier würde wieder als *Crossover* das Austauschen von identisch aufgeteilten Elternteilen funktionieren.
+
+Als *Mutation* würde hier auch wieder die Swap-Mutation gehen. Desweiteren müsste es eine Mutation geben, welche den Wert von nur einem Feld gegen einen anderen tauschen, um Farben rauszutauschen und so näher dem Ziel von möglichst wenig Farben zu kommen.
+
+**Fitnessfunktion:**
+
+Hier greift eine ähnliche herangehensweise wie schon beim Queens-Problem, nur das hier noch erweitert werden muss, um die Bedingung, möglichst wenig Farben zu nutzen, zu ergänzen.
+
+Die wichtige Regel: keine Konflikte
+
+$$f(x) = M - Konflikte$$
+
+$M$ ist hier die maximale Anzahl möglicher Konflikte
+
+Zusätzlich möglichst wenig Farben:
+
+$$f(x) = -(\text{genutzte Farben})$$
+
+das kann man mit Konflikten verrechnen:
+
+$$f(x) = -((M - Konflikte) + genutzte Farben)$$
+
+Im Netz findet man hier jetzt noch die Gewichtung der beiden Faktoren, um die Konflikte bei der Beurteilung der Fitness als wichtiger zu wiegen als die Farben, da es sich hierbei um die wichtigere Regel handelt.
+
+$$f(x) = -(\alpha * (M - Konflikte) + \beta * \text{genutzte Farben}) $$
+
+**Simulated Annealing:**
+
+Für Simulated Annealing braucht man zusätzlich zu den bisher definierten Sachen noch einen "Temperaturwert" welcher angewandt wird wenn ein akzeptanzkriterium geprüft wird. Das kann einfach sein das der neue Zustand besser sein muss als der alte und dann wird dieser mit einer errechneten Wahrscheinlichkeit aus dem Konflikt und der Temperatur aktzeptiert.
 
 ### EA.02: Implementierung
 

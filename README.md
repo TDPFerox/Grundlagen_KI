@@ -88,4 +88,19 @@ Für Simulated Annealing braucht man zusätzlich zu den bisher definierten Sache
 
 ### EA.02: Implementierung
 
+**8-Queens-Problem:**
+
+| Populationsgröße | Max. Gen. |    SR [%] | AES (Eval.) | AES (Gen.) | Ø Fitness | Bemerkung                                     |
+| ---------------: | --------: | --------: | ----------: | ---------: | --------: | --------------------------------------------- |
+|               10 |       100 |     23.52 |      510.06 |      50.01 |     27.06 | niedrige Erfolgsrate, geringe Vielfalt        |
+|               20 |       100 |     30.83 |      544.77 |      26.24 |     27.18 | stabile Konvergenz                            |
+|               30 |       100 | **31.34** |      581.87 |      18.40 |     27.19 | beste Rate bei 100 Gen., aber höherer Aufwand |
+|               10 |       200 |     28.02 |      632.86 |      62.29 |     27.14 | längere Laufzeit, etwas besser                |
+|               20 |       200 |     29.02 |      560.01 |      27.00 |     27.16 | ähnlich stabil wie 20/100                     |
+|               30 |       200 |     30.80 |      584.14 |      18.47 |     27.18 | kaum besser, trotz doppelter Gen.-Zahl        |
+
+Wie man der Tabelle entnehmen kann ist für meine Implementierung die Kombination von 100 Generationen und einer Populationsgröße von 30 das Optimum erreicht. Hier ist der Rechenaufwand aber bereits sehr hoch. 200 Generationen bringen keine nennenswerte Verbesserung, die beste Fitness meist schon innerhalb der ersten 100 Generationen gefunden wird.
+
+Die Anzahl der Eltern war bei diesen Versuchen immer 5.
+
 ### EA.03: Anwendung

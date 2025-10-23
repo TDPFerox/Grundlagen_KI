@@ -99,8 +99,12 @@ Für Simulated Annealing braucht man zusätzlich zu den bisher definierten Sache
 |               20 |       200 |     29.02 |      560.01 |      27.00 |     27.16 | ähnlich stabil wie 20/100                     |
 |               30 |       200 |     30.80 |      584.14 |      18.47 |     27.18 | kaum besser, trotz doppelter Gen.-Zahl        |
 
-Wie man der Tabelle entnehmen kann ist für meine Implementierung die Kombination von 100 Generationen und einer Populationsgröße von 30 das Optimum erreicht. Hier ist der Rechenaufwand aber bereits sehr hoch. 200 Generationen bringen keine nennenswerte Verbesserung, die beste Fitness meist schon innerhalb der ersten 100 Generationen gefunden wird.
+Wie man der Tabelle entnehmen kann ist für meine Implementierung die Kombination von 100 Generationen und einer Populationsgröße von 30 das Optimum erreicht. Hier ist der Rechenaufwand aber bereits sehr hoch. 200 Generationen bringen keine nennenswerte Verbesserung, da die beste Fitness meist schon innerhalb der ersten 100 Generationen gefunden wird.
 
 Die Anzahl der Eltern war bei diesen Versuchen immer 5.
+
+**Landkarten-Färbeproblem:**
+
+Beim Landkarten-Färbeproblem hat sich fast nichts geändert weder mit Populationsgröße noch mit Anzahl Generationen. Scheinbar ist mein Algorithmus zu aggressiv. Insgesamt scheint er immer schon nach der 10. Generation keine Konflikte mit nur 3 Farben zu haben. 
 
 ### EA.03: Anwendung

@@ -12,6 +12,8 @@ Die einzelnen Aufgabenblätter werden in Branches dieses Repository´s bearbeite
 
 8 Königinnen sollen auf einem 8x8 Brett so verteilt werden, das sie sich gegenseitig vertikal, horizontal und diagonal nicht bedrohen.
 
+---
+
 **Kodierung:**
 
 Die Darstellung als Array wäre hier möglich:
@@ -22,11 +24,15 @@ Die Darstellung als Array wäre hier möglich:
 
 Der Index des Arrays repräsentiert die Spalten und die Werte zeigen die Zeilen der Position der Königinnen.
 
+---
+
 **Operatoren:**
 
 Als *Crossover* wäre hier das Tauschen von zwei Teilen der Eltern eine Möglichkeit. Also das Auftrennen der Eltern an der gleichen Stelle.
 
 Für eine Mutation könnte man die zwei Werte des Arrays miteinander vertauschen (Swap-Mutation)
+
+---
 
 **Fitnessfunktion:**
 
@@ -40,9 +46,13 @@ $$f(x) = 28 - \text{Anzahl der Konfliktpaare}$$
 
 Wenn man 28 erreicht hat man nicht ein Konfliktpaar auf dem Brett -> perfektes Ergebnis
 
+---
+
 **Landkarten-Färbeproblem:**
 
 Regionen einer Landkarte sollen mit der minimalen Anzahl an Farben gefärbt werden, wobei niemals zwei aneinander grenzende Länder gleich gefärbt sein dürfen.
+
+---
 
 **Kodierung:**
 
@@ -54,11 +64,15 @@ Der Einfachheit halber kann man hier wieder den gleichen Ansatz verfolgen wie be
 
 Diesmal ist jeder ein Index ein bestimmtes Land und der Wert im Array eine bestimmte Farbe.
 
+---
+
 **Operatoren:**
 
 Auch hier würde wieder als *Crossover* das Austauschen von identisch aufgeteilten Elternteilen funktionieren.
 
 Als *Mutation* würde hier auch wieder die Swap-Mutation gehen. Desweiteren müsste es eine Mutation geben, welche den Wert von nur einem Feld gegen einen anderen tauschen, um Farben rauszutauschen und so näher dem Ziel von möglichst wenig Farben zu kommen.
+
+---
 
 **Fitnessfunktion:**
 
@@ -82,6 +96,8 @@ Im Netz findet man hier jetzt noch die Gewichtung der beiden Faktoren, um die Ko
 
 $$f(x) = -(\alpha * (M - Konflikte) + \beta * \text{genutzte Farben}) $$
 
+---
+
 **Simulated Annealing:**
 
 Für Simulated Annealing braucht man zusätzlich zu den bisher definierten Sachen noch einen "Temperaturwert" welcher angewandt wird wenn ein akzeptanzkriterium geprüft wird. Das kann einfach sein das der neue Zustand besser sein muss als der alte und dann wird dieser mit einer errechneten Wahrscheinlichkeit aus dem Konflikt und der Temperatur aktzeptiert.
@@ -103,8 +119,40 @@ Wie man der Tabelle entnehmen kann ist für meine Implementierung die Kombinatio
 
 Die Anzahl der Eltern war bei diesen Versuchen immer 5.
 
+---
+
 **Landkarten-Färbeproblem:**
 
 Beim Landkarten-Färbeproblem hat sich fast nichts geändert weder mit Populationsgröße noch mit Anzahl Generationen. Scheinbar ist mein Algorithmus zu aggressiv. Insgesamt scheint er immer schon nach der 10. Generation keine Konflikte mit nur 3 Farben zu haben. 
 
 ### EA.03: Anwendung
+
+**1. Randal Olson – “Here’s Waldo”**
+
+Olson nutzte einen genetischen Algorithmus, um den optimalen Suchpfad zu bestimmen, in welcher Reihenfolge man bekannte Waldo-Positionen besuchen sollte. Das Problem ähnelt dem  Travelling Salesman Problem .
+ Kodierung:  Jedes Individuum ist eine  Permutation  der 68 Waldo-Koordinaten, also eine Reihenfolge möglicher Suchpunkte.
+ Fitnessfunktion:  misst die  Gesamtdistanz  des Pfades – je kürzer, desto besser. Meist wird ( \text{Fitness} = 1/\text{Distanz} ) verwendet, um hohe Fitness für kurze Wege zu erzielen.
+ Operatoren:  Permutations-spezifische  Mutation  (Vertauschen, Invertieren, Verschieben) und  Crossover  (Order- oder Partially-Matched-Crossover).
+ Selektion:  Fitnessbasierte Auswahl, meist mit  Elitismus , um die besten Lösungen zu bewahren.
+Das Ziel ist die Minimierung der Suchzeit durch evolutionäre Verbesserung der Punktreihenfolge. Der Ansatz zeigt, wie genetische Optimierung komplexe kombinatorische Probleme effizient annähern kann.
+
+---
+
+**2. Evolution Simulator (OpenProcessing)**
+
+Der Simulator demonstriert  natürliche Selektion  mithilfe digitaler „Lebewesen“.
+ Kodierung:  Jedes Individuum besitzt Gene wie  Farbe ,  Größe , oder  Bewegung , meist als reelle Werte gespeichert.
+ Fitnessfunktion:  bewertet Eigenschaften nach Nähe zu einem Ziel oder Überlebensfähigkeit (z. B. Farbe, Anpassung).
+ Operatoren:   Kreuzung  kombiniert Gene zweier Eltern,  Mutation  verändert einzelne Werte leicht.
+Über Generationen überleben fittere Individuen und dominieren die Population. Der Simulator veranschaulicht spielerisch Prinzipien evolutionärer Anpassung, Variation und Selektion in einem interaktiven, visuellen Modell.
+
+---
+
+**3. American Fuzzy Lop (AFL)**
+
+AFL nutzt evolutionäre Ideen zum Software-Fuzzing.
+Kodierung: Jedes Individuum ist eine Byte-Sequenz (Input-Datei).
+Fitnessfunktion: misst, ob ein Testfall neue Programmpfade (Code-Abdeckung) entdeckt; neue Pfade = hohe Fitness.
+Operatoren: Mutation (Bitflips, Block-Änderungen) und Splicing (Crossover zweier Inputs).
+Nur „interessante“ Testfälle werden behalten, also natürliche Selektion
+So entstehen über viele Generationen immer effektivere Eingaben, die tiefere Programmzustände anstoßen – eine evolutionäre Suche nach Fehlern und Schwachstellen.

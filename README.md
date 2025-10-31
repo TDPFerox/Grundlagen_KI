@@ -228,9 +228,9 @@ Spielsituation:
 
 ---
 
-## Aufgabe 4 - Vereinfachter Minimax für Nullsummenspiele
+# Games.03: Minimax vereinfachen
 
-### Theoretische Grundlage
+## Theoretische Grundlage
 
 In **Nullsummenspielen** gilt die wichtige Eigenschaft:
 ```
@@ -239,7 +239,7 @@ Min-Value(s) = -Max-Value(s)
 
 Das bedeutet: Was für einen Spieler gut ist, ist für den anderen gleichermaßen schlecht.
 
-### Vereinfachung des Algorithmus
+## Vereinfachung des Algorithmus
 
 Statt zwei separate Funktionen (`min-value` und `max-value`) zu haben, können wir eine einzige Funktion verwenden, die **immer maximiert**:
 
@@ -266,7 +266,7 @@ def minimax_simplified(node, player_sign):
                for child in children(node))
 ```
 
-### Beispielbaum zur Demonstration
+## Beispielbaum zur Demonstration
 
 ```
                 A (MAX)
@@ -277,7 +277,7 @@ def minimax_simplified(node, player_sign):
           3  5  2  9  1  (Blätter)
 ```
 
-#### Evaluierung mit Original Minimax
+### Evaluierung mit Original Minimax
 
 | Schritt | Knoten | Typ | Berechnung | Ergebnis |
 |---------|--------|-----|------------|----------|
@@ -291,7 +291,7 @@ def minimax_simplified(node, player_sign):
 | 8 | D | MIN | min(9, 1) | 1 |
 | 9 | A | MAX | max(3, 2, 1) | **3** |
 
-#### Evaluierung mit Vereinfachtem Minimax
+### Evaluierung mit Vereinfachtem Minimax
 
 | Schritt | Knoten | Sign | Berechnung | Ergebnis |
 |---------|--------|------|------------|----------|
@@ -305,11 +305,11 @@ def minimax_simplified(node, player_sign):
 | 8 | D | -1 | max(-9, -1) | -1 → negiert: +1 |
 | 9 | A | +1 | max(3, 2, 1) | **3** |
 
-### Ergebnis
+## Ergebnis
 
 Beide Algorithmen liefern **dasselbe Endergebnis: 3**
 
-### Vorteile der Vereinfachung
+## Vorteile der Vereinfachung
 
 **Weniger Code**: Nur eine Funktion statt zwei (min-value/max-value)  
 **Gleiche Funktionalität**: Identisches Ergebnis  
@@ -317,19 +317,108 @@ Beide Algorithmen liefern **dasselbe Endergebnis: 3**
 **Einfachere Erweiterung**: Alpha-Beta-Pruning lässt sich leichter integrieren  
 **Weniger Fehleranfällig**: Keine Verwechslung zwischen MIN und MAX  
 
-### Implementierung
+# Games.04: Suchtiefe begrenzen
 
-Die vollständige Implementierung befindet sich in `minimax_simplified.py` und zeigt:
-- Original Minimax mit expliziter MIN/MAX-Unterscheidung
-- Vereinfachter Minimax mit Nullsummen-Eigenschaft
-- Vergleich an einem Beispielbaum
-- Anwendung auf Tic Tac Toe
+**Endzustand - X gewinnt**
 
-**Ausführung:**
-```bash
-python minimax_simplified.py
+```
+ X | X | X
+-----------
+ O | O | 
+-----------
+   |   | 
 ```
 
-**Modus 1**: Demonstriert den Unterschied am Beispielbaum  
-**Modus 2**: Vergleicht beide Algorithmen auf einem Tic Tac Toe Feld  
-**Modus 3**: Vergleicht mehrere Tic Tac Toe Szenarien
+- X hat 1 volle Linie (erste Reihe): X3=1
+- Also: Utility = +1
+(Endzustand, keine Eval-Funktion nötig)
+
+**Endzustand - O gewinnt**
+
+```
+ X | X | O
+-----------
+ X | O |  
+-----------
+   | O |  
+```
+
+- O hat 1 volle Linie (zweite Spalte): O3=1
+- Utility = −1
+
+**Endzustand - Unentschieden**
+
+```
+ X | O | X
+-----------
+ X | X | O
+-----------
+ O | X | O
+```
+
+- Keine Linie mit 3 gleichen Symbolen → Utility = 0
+
+**Zwischenstand 1 - Frühes Spiel**
+
+```
+ X |   |  
+-----------
+   | O |  
+-----------
+   |   |  
+```
+
+- Linien mit nur 1 X und keinem O:
+    - Zeile 1, Spalte 1, Diagonale 1 → X1=3
+- Linien mit nur 1 O und keinem X:
+    - Zeile 2, Spalte 2, Diagonale 1, Diagonale 2 → O1=4
+- X2=0,O2=0
+
+Eval(s)=3⋅0+3−(3⋅0+4)=3−4=−1
+
+O leicht im Vorteil
+
+**Zwischenzustand 2 – X droht mit Sieg**
+
+```
+ X | X |  
+-----------
+ O |   |  
+-----------
+   | O |  
+```
+- Linien mit 2 X und keinem O:
+    - Zeile 1 → X2=1
+- Linien mit 1 X und keinem O (z. B. Diagonale 2): X1=1
+- Linien mit 1 O und keinem X (Spalte 2, Diagonale 1): O1=2
+- O2=0
+
+Eval(s)=3⋅1+1−(3⋅0+2)=4−2=2
+
+X deutlich im Vorteil
+
+**Zwischenzustand 3 – O droht mit Sieg**
+
+```
+ X | X | O
+-----------
+   | O |  
+-----------
+   |   | X
+```
+- O2=1 (mittlere Spalte fast voll mit O)
+- X2=0
+- X1=2 (einige Linien mit einem X)
+- O1=1
+
+Eval(s)=3⋅0+2−(3⋅1+1)=2−4=−2
+
+O deutlich im Vorteil
+
+**Sinvoll weil:**
+
+- Linear und effizient: Berechnet schnell eine Näherung des Gewinnpotenzials beider Spieler.
+- Berücksichtigt drohende Gewinne: 2-in-a-row zählt dreifach → Linien kurz vor dem Sieg sind wichtiger.
+- Symmetrisch: Vorteil für X ist Nachteil für O (gegenseitige Balance).
+- Kontinuierlich: Gibt abgestufte Werte (nicht nur Gewinn/Verlust), ideal bei Suchtiefenbeschränkung.
+- Domänenwissen: Spiegelt direkt die Spielstruktur von Tic-Tac-Toe wider (8 mögliche Gewinnlinien).

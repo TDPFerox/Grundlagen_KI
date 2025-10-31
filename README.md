@@ -422,3 +422,11 @@ O deutlich im Vorteil
 - Symmetrisch: Vorteil für X ist Nachteil für O (gegenseitige Balance).
 - Kontinuierlich: Gibt abgestufte Werte (nicht nur Gewinn/Verlust), ideal bei Suchtiefenbeschränkung.
 - Domänenwissen: Spiegelt direkt die Spielstruktur von Tic-Tac-Toe wider (8 mögliche Gewinnlinien).
+
+# Games.05: Minimax generalisiert
+
+- P3-Knoten (von links nach rechts): (1,2,3), (6,1,2), (−1,5,2), (5,4,5)
+- P2-Knoten (links, rechts): (1,2,3), (−1,5,2)
+- Wurzel (Spieler 1): (1,2,3)
+
+Die Rückwärtsinduktion liefert also als Endergebnis für die Wurzel das Tripel (1,2,3) — und alle inneren Knoten sind wie oben angegeben.

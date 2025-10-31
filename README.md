@@ -104,3 +104,124 @@ Konkreter Vorschlag für größere Anzahl von Abschneidungen in diesem Baum:
 - Ebenso: bei D (MIN) wäre es optimal, falls möglich, das kleinste Blatt (Wert 1) zuerst zu prüfen – das würde ebenfalls sofort abschneiden.
 
 Also: Ja — z. B. unter C: Reihenfolge F, G, E (oder F, E, G) ist besser als die gegebene (E,F,G). Mit dieser optimierten Reihenfolge werden deutlich mehr Zweige abgeschnitten.
+
+# Optimale Spiele: Minimax und alpha-beta-Pruning
+
+## Aufgabe 3 - Vergleich Minimax mit und ohne Alpha-Beta-Pruning
+
+### SZENARIO 1: Leeres Spielfeld (Spielstart)
+
+**Vergleich: Minimax vs. Alpha-Beta-Pruning**
+
+Spielsituation:
+```
+   |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+```
+
+| Algorithmus | Besuchte Knoten | Reduzierung |
+|------------|-----------------|-------------|
+| Minimax OHNE Pruning | 549.946 | - |
+| Minimax MIT Pruning | 20.866 | 96.2% |
+| **Effizienzgewinn** | **26.36x schneller** | |
+
+---
+
+### SZENARIO 2: Nach dem ersten Zug (Mitte belegt)
+
+Spielsituation:
+```
+   |   |  
+-----------
+   | O |  
+-----------
+   |   |  
+```
+
+| Algorithmus | Besuchte Knoten | Reduzierung |
+|------------|-----------------|-------------|
+| Minimax OHNE Pruning | 40.721 | - |
+| Minimax MIT Pruning | 2.184 | 94.6% |
+| **Effizienzgewinn** | **18.65x schneller** | |
+
+---
+
+### SZENARIO 3: Mittleres Spiel (4 Züge)
+
+Spielsituation:
+```
+ X |   | X
+-----------
+   | O |  
+-----------
+ O |   |  
+```
+
+| Algorithmus | Besuchte Knoten | Reduzierung |
+|------------|-----------------|-------------|
+| Minimax OHNE Pruning | 186 | - |
+| Minimax MIT Pruning | 48 | 74.2% |
+| **Effizienzgewinn** | **3.88x schneller** | |
+
+---
+
+### SZENARIO 4: Spätes Spiel (6 Züge)
+
+Spielsituation:
+```
+ X | O | O
+-----------
+ O | X |  
+-----------
+   |   | X
+```
+
+| Algorithmus | Besuchte Knoten | Reduzierung |
+|------------|-----------------|-------------|
+| Minimax OHNE Pruning | 1 | - |
+| Minimax MIT Pruning | 1 | 0.0% |
+| **Effizienzgewinn** | **1.00x** | |
+
+---
+
+### SZENARIO 5: Kritische Situation (Block erforderlich)
+
+Spielsituation:
+```
+ X | X |  
+-----------
+   | O |  
+-----------
+   |   |  
+```
+
+| Algorithmus | Besuchte Knoten | Reduzierung |
+|------------|-----------------|-------------|
+| Minimax OHNE Pruning | 935 | - |
+| Minimax MIT Pruning | 75 | 92.0% |
+| **Effizienzgewinn** | **12.47x schneller** | |
+
+---
+
+### ZUSAMMENFASSUNG
+
+| Szenario | Ohne Pruning | Mit Pruning | Reduzierung |
+|----------|--------------|-------------|-------------|
+| Leeres Spielfeld | 549.946 | 20.866 | 96.2% |
+| Nach 1 Zug | 40.721 | 2.184 | 94.6% |
+| Mittleres Spiel | 186 | 48 | 74.2% |
+| Spätes Spiel | 1 | 1 | 0.0% |
+| Kritische Situation | 935 | 75 | 92.0% |
+| **GESAMT** | **591.789** | **23.174** | **96.1%** |
+
+**Durchschnittlicher Effizienzgewinn: 25.54x schneller**
+
+#### Interpretation der Ergebnisse
+
+- **Maximaler Effekt am Spielanfang**: Bei einem leeren Spielfeld werden 96.2% der Knoten eingespart
+- **Abnehmender Effekt**: Je weniger Züge möglich sind, desto geringer der Pruning-Effekt
+- **Extremfall**: Bei nur noch einem möglichen Zug (Szenario 4) gibt es keinen Unterschied
+- **Gesamtbilanz**: Über alle Szenarien hinweg werden durchschnittlich 96.1% der Knoten eingespart

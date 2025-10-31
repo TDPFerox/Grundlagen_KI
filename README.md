@@ -225,3 +225,111 @@ Spielsituation:
 - **Abnehmender Effekt**: Je weniger Züge möglich sind, desto geringer der Pruning-Effekt
 - **Extremfall**: Bei nur noch einem möglichen Zug (Szenario 4) gibt es keinen Unterschied
 - **Gesamtbilanz**: Über alle Szenarien hinweg werden durchschnittlich 96.1% der Knoten eingespart
+
+---
+
+## Aufgabe 4 - Vereinfachter Minimax für Nullsummenspiele
+
+### Theoretische Grundlage
+
+In **Nullsummenspielen** gilt die wichtige Eigenschaft:
+```
+Min-Value(s) = -Max-Value(s)
+```
+
+Das bedeutet: Was für einen Spieler gut ist, ist für den anderen gleichermaßen schlecht.
+
+### Vereinfachung des Algorithmus
+
+Statt zwei separate Funktionen (`min-value` und `max-value`) zu haben, können wir eine einzige Funktion verwenden, die **immer maximiert**:
+
+**Original Minimax:**
+```python
+def minimax(node, is_maximizing):
+    if is_terminal(node):
+        return evaluate(node)
+    
+    if is_maximizing:
+        return max(minimax(child, False) for child in children(node))
+    else:
+        return min(minimax(child, True) for child in children(node))
+```
+
+**Vereinfachter Minimax:**
+```python
+def minimax_simplified(node, player_sign):
+    if is_terminal(node):
+        return evaluate(node) * player_sign
+    
+    # Immer maximieren, Ergebnis für Gegner negieren
+    return max(-minimax_simplified(child, -player_sign) 
+               for child in children(node))
+```
+
+### Beispielbaum zur Demonstration
+
+```
+                A (MAX)
+              / | \
+             /  |  \
+            B   C   D (MIN)
+           / \  |  / \
+          3  5  2  9  1  (Blätter)
+```
+
+#### Evaluierung mit Original Minimax
+
+| Schritt | Knoten | Typ | Berechnung | Ergebnis |
+|---------|--------|-----|------------|----------|
+| 1 | B1 | Blatt | - | 3 |
+| 2 | B2 | Blatt | - | 5 |
+| 3 | B | MIN | min(3, 5) | 3 |
+| 4 | C1 | Blatt | - | 2 |
+| 5 | C | MIN | min(2) | 2 |
+| 6 | D1 | Blatt | - | 9 |
+| 7 | D2 | Blatt | - | 1 |
+| 8 | D | MIN | min(9, 1) | 1 |
+| 9 | A | MAX | max(3, 2, 1) | **3** |
+
+#### Evaluierung mit Vereinfachtem Minimax
+
+| Schritt | Knoten | Sign | Berechnung | Ergebnis |
+|---------|--------|------|------------|----------|
+| 1 | B1 | +1 | 3 × (+1) | +3 |
+| 2 | B2 | +1 | 5 × (+1) | +5 |
+| 3 | B | -1 | max(-3, -5) | -3 → negiert: +3 |
+| 4 | C1 | +1 | 2 × (+1) | +2 |
+| 5 | C | -1 | max(-2) | -2 → negiert: +2 |
+| 6 | D1 | +1 | 9 × (+1) | +9 |
+| 7 | D2 | +1 | 1 × (+1) | +1 |
+| 8 | D | -1 | max(-9, -1) | -1 → negiert: +1 |
+| 9 | A | +1 | max(3, 2, 1) | **3** |
+
+### Ergebnis
+
+Beide Algorithmen liefern **dasselbe Endergebnis: 3**
+
+### Vorteile der Vereinfachung
+
+**Weniger Code**: Nur eine Funktion statt zwei (min-value/max-value)  
+**Gleiche Funktionalität**: Identisches Ergebnis  
+**Eleganter**: Direktere Implementierung der Spieltheorie  
+**Einfachere Erweiterung**: Alpha-Beta-Pruning lässt sich leichter integrieren  
+**Weniger Fehleranfällig**: Keine Verwechslung zwischen MIN und MAX  
+
+### Implementierung
+
+Die vollständige Implementierung befindet sich in `minimax_simplified.py` und zeigt:
+- Original Minimax mit expliziter MIN/MAX-Unterscheidung
+- Vereinfachter Minimax mit Nullsummen-Eigenschaft
+- Vergleich an einem Beispielbaum
+- Anwendung auf Tic Tac Toe
+
+**Ausführung:**
+```bash
+python minimax_simplified.py
+```
+
+**Modus 1**: Demonstriert den Unterschied am Beispielbaum  
+**Modus 2**: Vergleicht beide Algorithmen auf einem Tic Tac Toe Feld  
+**Modus 3**: Vergleicht mehrere Tic Tac Toe Szenarien
